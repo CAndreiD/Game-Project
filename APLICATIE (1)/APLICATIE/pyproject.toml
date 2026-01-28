@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "hangman-3d"
+version = "1.0.0"
+description = "Joc interactiv de spânzurătoare cu rendering 3D"
+authors = ["Hangman 3D Contributors <hangman@example.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "hangman_3d", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^3.1.1"
+requests = "^2.31.0"
+pandas = "^2.0.0"
+matplotlib = "^3.8.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=src/hangman_3d --cov-report=html"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

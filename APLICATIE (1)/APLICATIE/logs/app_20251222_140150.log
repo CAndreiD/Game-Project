@@ -1,0 +1,141 @@
+2025-12-22 14:01:50 - root - INFO - Logging initialized - Level: INFO
+2025-12-22 14:01:50 - root - INFO - Log file: logs/app_20251222_140150.log
+2025-12-22 14:01:50 - __main__ - INFO - Starting Hangman 3D application
+2025-12-22 14:01:50 - __main__ - INFO - Starting Flask development server
+2025-12-22 14:01:50 - werkzeug - WARNING -  * Debugger is active!
+2025-12-22 14:01:50 - werkzeug - INFO -  * Debugger PIN: 554-146-951
+2025-12-22 14:01:50 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:01:50] "GET / HTTP/1.1" 200 -
+2025-12-22 14:01:58 - matplotlib.font_manager - INFO - generated new fontManager
+2025-12-22 14:01:58 - src.hangman_3d.data_pipeline - INFO - Starting full data pipeline
+2025-12-22 14:01:58 - src.hangman_3d.data_pipeline - INFO - Step 1: Collecting posts from API
+2025-12-22 14:01:58 - src.hangman_3d.api_client - INFO - Fetching data from https://jsonplaceholder.typicode.com/posts?_limit=10
+2025-12-22 14:01:59 - src.hangman_3d.api_client - INFO - Successfully fetched 10 posts
+2025-12-22 14:01:59 - src.hangman_3d.csv_exporter - INFO - Successfully exported 10 rows to output/posts_data.csv
+2025-12-22 14:01:59 - src.hangman_3d.data_processor - INFO - Counted 10 items by field userId
+2025-12-22 14:01:59 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-12-22 14:01:59 - matplotlib.category - INFO - Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2025-12-22 14:01:59 - src.hangman_3d.visualizer - INFO - Successfully created bar chart: output/posts_by_user.png
+2025-12-22 14:01:59 - src.hangman_3d.data_pipeline - INFO - Step 2: Collecting users from API
+2025-12-22 14:01:59 - src.hangman_3d.api_client - INFO - Fetching users from https://jsonplaceholder.typicode.com/users?_limit=5
+2025-12-22 14:01:59 - src.hangman_3d.api_client - INFO - Successfully fetched 5 users
+2025-12-22 14:01:59 - src.hangman_3d.csv_exporter - INFO - Successfully exported 5 rows to output/users_data.csv
+2025-12-22 14:01:59 - src.hangman_3d.data_processor - INFO - Counted 5 items by field address
+2025-12-22 14:01:59 - src.hangman_3d.visualizer - INFO - Successfully created pie chart: output/users_distribution.png
+2025-12-22 14:01:59 - src.hangman_3d.data_pipeline - INFO - Pipeline completed successfully
+2025-12-22 14:01:59 - werkzeug - INFO - 127.0.0.1 - - [22/Dec/2025 14:01:59] "GET /api/data/pipeline HTTP/1.1" 200 -
+2025-12-22 14:04:20 - werkzeug - INFO - 127.0.0.1 - - [22/Dec/2025 14:04:20] "GET / HTTP/1.1" 200 -
+2025-12-22 14:04:20 - werkzeug - INFO - 127.0.0.1 - - [22/Dec/2025 14:04:20] "GET /api/data/status HTTP/1.1" 200 -
+2025-12-22 14:04:50 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:50] "POST /start_game HTTP/1.1" 200 -
+2025-12-22 14:04:52 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:52] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:04:53 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:53] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:04:54 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:54] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:04:54 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:54] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:04:54 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:54] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "[31m[1mPOST /guess HTTP/1.1[0m" 400 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "[31m[1mPOST /guess HTTP/1.1[0m" 400 -
+2025-12-22 14:04:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:55] "[31m[1mPOST /guess HTTP/1.1[0m" 400 -
+2025-12-22 14:04:56 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:56] "[31m[1mPOST /guess HTTP/1.1[0m" 400 -
+2025-12-22 14:04:56 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:56] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:04:56 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:04:56] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:03 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:03] "POST /start_game HTTP/1.1" 200 -
+2025-12-22 14:05:04 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:04] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:05 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:05] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:06 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:06] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:07 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:07] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:08 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:08] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:09 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:09] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:10 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:10] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:11 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:11] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:12 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:12] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:13 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:13] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:14 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:14] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:15 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:15] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:16 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:16] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:17 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:17] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:18 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:18] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:19 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:19] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:20 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:20] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:21 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:21] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:22 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:22] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:23 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:23] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:24 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:24] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:25 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:25] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:26 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:26] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:27 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:27] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:28 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:28] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:29 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:29] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:30 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:30] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:31 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:31] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:32 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:32] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:33 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:33] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:34 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:34] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:35 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:35] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:36 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:36] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:37 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:37] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:38 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:38] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:39 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:39] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:40 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:40] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:41 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:41] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:42 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:42] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:43 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:43] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:44 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:44] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:45 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:45] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:46 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:46] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:47 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:47] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:48 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:48] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:49 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:49] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:50 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:50] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:51 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:51] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:52 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:52] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:53 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:53] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:54 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:54] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:55 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:55] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:56 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:56] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:56 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:56] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:05:56 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:56] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:05:57 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:57] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:58 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:58] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:59 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:59] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:05:59 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:59] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:05:59 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:05:59] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:00 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:00] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "[31m[1mPOST /guess HTTP/1.1[0m" 400 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "[31m[1mPOST /guess HTTP/1.1[0m" 400 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "[31m[1mPOST /guess HTTP/1.1[0m" 400 -
+2025-12-22 14:06:01 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:01] "[31m[1mPOST /guess HTTP/1.1[0m" 400 -
+2025-12-22 14:06:06 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:06] "POST /start_game HTTP/1.1" 200 -
+2025-12-22 14:06:07 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:07] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:08 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:08] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:08 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:08] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:08 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:08] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:09 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:09] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:10 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:10] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:10 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:10] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:11 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:11] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:11 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:11] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:12 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:12] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:13 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:13] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:13 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:13] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:13 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:13] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:14 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:14] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:15 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:15] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:15 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:15] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:16 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:16] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:17 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:17] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:18 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:18] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:18 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:18] "POST /guess HTTP/1.1" 200 -
+2025-12-22 14:06:19 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:19] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:20 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:20] "POST /update_time HTTP/1.1" 200 -
+2025-12-22 14:06:20 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:06:20] "POST /guess HTTP/1.1" 200 -

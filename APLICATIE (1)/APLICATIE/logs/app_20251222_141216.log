@@ -1,0 +1,18 @@
+2025-12-22 14:12:16 - root - INFO - Logging initialized - Level: INFO
+2025-12-22 14:12:16 - root - INFO - Log file: logs/app_20251222_141216.log
+2025-12-22 14:12:16 - __main__ - INFO - Starting Hangman 3D application
+2025-12-22 14:12:16 - __main__ - INFO - Starting Flask development server
+2025-12-22 14:12:16 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.31.83.194:5000
+2025-12-22 14:12:16 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-22 14:12:16 - werkzeug - INFO -  * Restarting with stat
+2025-12-22 14:12:16 - root - INFO - Logging initialized - Level: INFO
+2025-12-22 14:12:16 - root - INFO - Log file: logs/app_20251222_141216.log
+2025-12-22 14:12:16 - __main__ - INFO - Starting Hangman 3D application
+2025-12-22 14:12:16 - __main__ - INFO - Starting Flask development server
+2025-12-22 14:12:16 - werkzeug - WARNING -  * Debugger is active!
+2025-12-22 14:12:16 - werkzeug - INFO -  * Debugger PIN: 554-146-951
+2025-12-22 14:12:17 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:12:17] "GET / HTTP/1.1" 200 -
+2025-12-22 14:14:05 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:14:05] "GET / HTTP/1.1" 200 -

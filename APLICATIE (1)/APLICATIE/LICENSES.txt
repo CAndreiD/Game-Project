@@ -1,0 +1,109 @@
+===============================================================================
+HANGMAN 3D - LICENSE AUDIT & COMPONENT ATTRIBUTION
+===============================================================================
+
+Project License: MIT (see LICENSE file)
+
+===============================================================================
+PYTHON DEPENDENCIES
+===============================================================================
+
+1. Flask v3.1+
+   - License: BSD-3-Clause
+   - Repository: https://github.com/pallets/flask
+   - Purpose: Web framework for backend API
+   - Used by: src/hangman_3d/app.py, src/hangman_3d/routes/
+
+2. Requests v2.31+
+   - License: Apache 2.0
+   - Repository: https://github.com/psf/requests
+   - Purpose: HTTP client for external API calls
+   - Used by: src/hangman_3d/api_client.py
+
+3. Pandas v2.0+
+   - License: BSD-3-Clause
+   - Repository: https://github.com/pandas-dev/pandas
+   - Purpose: Data manipulation and analysis
+   - Used by: Data processing pipeline (potential future use)
+
+4. Matplotlib v3.8+
+   - License: PSF (Python Software Foundation License)
+   - Repository: https://github.com/matplotlib/matplotlib
+   - Purpose: Data visualization and chart generation
+   - Used by: src/hangman_3d/visualizer.py
+
+5. Pytest v7.4+ (Development)
+   - License: MIT
+   - Repository: https://github.com/pytest-dev/pytest
+   - Purpose: Testing framework
+   - Used by: tests/ directory
+
+6. Pytest-cov v4.1+ (Development)
+   - License: MIT
+   - Repository: https://github.com/pytest-dev/pytest-cov
+   - Purpose: Code coverage for tests
+   - Used by: Test suite configuration
+
+===============================================================================
+FRONTEND DEPENDENCIES (CDN)
+===============================================================================
+
+1. Three.js r128
+   - License: MIT
+   - Repository: https://github.com/mrdoob/three.js
+   - CDN: https://cdnjs.cloudflare.com/ajax/libs/three.js/r128
+   - Purpose: 3D graphics rendering
+   - Used by: templates/index.html
+
+===============================================================================
+EXTERNAL SERVICES/APIs
+===============================================================================
+
+1. JSONPlaceholder API
+   - License: Public domain / CC0
+   - Website: https://jsonplaceholder.typicode.com
+   - Purpose: Demo data for REST API integration testing
+   - Data: Test posts, users, comments (non-sensitive)
+
+2. CDNjs
+   - License: Various (MIT for Three.js)
+   - Website: https://cdnjs.com
+   - Purpose: Content delivery network for frontend libraries
+
+===============================================================================
+LICENSE SUMMARY
+===============================================================================
+
+✅ MIT License: Flask, Pytest, Pytest-cov, Three.js
+✅ Apache 2.0: Requests
+✅ BSD-3-Clause: Pandas, Flask, Matplotlib
+✅ PSF License: Matplotlib (compatible with MIT)
+✅ Public Domain: JSONPlaceholder API
+
+All dependencies use PERMISSIVE, OPEN-SOURCE LICENSES compatible with the
+project's MIT license. No proprietary or restrictive licenses detected.
+
+===============================================================================
+COMPLIANCE NOTES
+===============================================================================
+
+✅ All software licenses are open-source and permissive
+✅ No GPL-licensed components (would require source code disclosure)
+✅ No proprietary software dependencies
+✅ Commercial use permitted under MIT license
+✅ Can be freely distributed and modified
+
+===============================================================================
+ATTRIBUTION
+===============================================================================
+
+Dependencies are documented in pyproject.toml:
+- See [tool.poetry.dependencies] for production dependencies
+- See [tool.poetry.group.dev.dependencies] for development dependencies
+
+Full poetry.lock file contains precise version pins for reproducibility.
+
+===============================================================================
+Last Updated: 2025-12-22
+Generated for Hangman 3D v1.0.0
+===============================================================================

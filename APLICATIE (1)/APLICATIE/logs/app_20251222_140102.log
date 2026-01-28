@@ -1,0 +1,9 @@
+2025-12-22 14:01:02 - root - INFO - Logging initialized - Level: INFO
+2025-12-22 14:01:02 - root - INFO - Log file: logs/app_20251222_140102.log
+2025-12-22 14:01:02 - __main__ - INFO - Starting Hangman 3D application
+2025-12-22 14:01:02 - __main__ - INFO - Starting Flask development server
+2025-12-22 14:01:02 - werkzeug - WARNING -  * Debugger is active!
+2025-12-22 14:01:02 - werkzeug - INFO -  * Debugger PIN: 554-146-951
+2025-12-22 14:01:02 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:01:02] "GET / HTTP/1.1" 200 -
+2025-12-22 14:01:09 - src.hangman_3d.app - ERROR - Error running pipeline: No module named 'requests'
+2025-12-22 14:01:09 - werkzeug - INFO - 127.0.0.1 - - [22/Dec/2025 14:01:09] "[35m[1mGET /api/data/pipeline HTTP/1.1[0m" 500 -

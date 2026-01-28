@@ -1,0 +1,158 @@
+<svg viewBox="0 0 1200 1000" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="600" y="30" font-size="28" font-weight="bold" text-anchor="middle" fill="#333">
+    HANGMAN 3D - Process Flow Diagram
+  </text>
+  
+  <!-- Helper function for rounded rectangles -->
+  <defs>
+    <style>
+      .process-box { fill: #e3f2fd; stroke: #1976d2; stroke-width: 2; }
+      .decision-box { fill: #fff9c4; stroke: #f57f17; stroke-width: 2; }
+      .action-box { fill: #f3e5f5; stroke: #7b1fa2; stroke-width: 2; }
+      .end-box { fill: #c8e6c9; stroke: #388e3c; stroke-width: 2; }
+      .arrow { stroke: #333; stroke-width: 2; fill: none; }
+      .label { font-size: 11; fill: #333; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#333"/>
+    </marker>
+  </defs>
+  
+  <!-- START -->
+  <circle cx="600" cy="80" r="25" class="end-box" stroke="#388e3c" stroke-width="2"/>
+  <text x="600" y="87" text-anchor="middle" class="label" font-weight="bold">START</text>
+  
+  <!-- Arrow down -->
+  <path d="M 600 105 L 600 140" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 1: User selects difficulty -->
+  <rect x="450" y="140" width="300" height="50" rx="5" class="process-box"/>
+  <text x="600" y="168" text-anchor="middle" class="label" font-weight="bold">User Selects Difficulty Level</text>
+  
+  <path d="M 600 190 L 600 225" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 2: POST /start_game -->
+  <rect x="450" y="225" width="300" height="50" rx="5" class="action-box"/>
+  <text x="600" y="245" text-anchor="middle" class="label" font-weight="bold">POST /start_game</text>
+  <text x="600" y="260" text-anchor="middle" font-size="9" fill="#666">{difficulty: "mediu"}</text>
+  
+  <path d="M 600 275 L 600 310" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 3: Create GameState -->
+  <rect x="450" y="310" width="300" height="70" rx="5" class="action-box"/>
+  <text x="600" y="335" text-anchor="middle" class="label" font-weight="bold">Create GameState</text>
+  <text x="600" y="352" text-anchor="middle" font-size="9" fill="#666">• Select random word from WORDS</text>
+  <text x="600" y="365" text-anchor="middle" font-size="9" fill="#666">• Initialize timer, guessed_letters = []</text>
+  
+  <path d="M 600 380 L 600 415" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 4: Render Game Interface -->
+  <rect x="450" y="415" width="300" height="50" rx="5" class="process-box"/>
+  <text x="600" y="443" text-anchor="middle" class="label" font-weight="bold">Render Game Interface</text>
+  
+  <path d="M 600 465 L 600 500" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- GAME LOOP START -->
+  <text x="600" y="495" text-anchor="middle" font-size="12" font-weight="bold" fill="#f57f17">GAME LOOP</text>
+  
+  <path d="M 600 500 L 600 535" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 5: User Guesses Letter -->
+  <rect x="450" y="535" width="300" height="50" rx="5" class="process-box"/>
+  <text x="600" y="563" text-anchor="middle" class="label" font-weight="bold">User Guesses Letter or Timer Updates</text>
+  
+  <path d="M 600 585 L 600 620" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Step 6: Decision - What action? -->
+  <polygon points="600,620 700,660 600,700 500,660" class="decision-box"/>
+  <text x="600" y="665" text-anchor="middle" class="label" font-weight="bold">Action Type?</text>
+  
+  <!-- LEFT BRANCH: Guess Letter -->
+  <path d="M 500 660 L 350 660" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="420" y="655" font-size="10" fill="#333">GUESS</text>
+  
+  <rect x="150" y="635" width="200" height="50" rx="5" class="action-box"/>
+  <text x="250" y="653" text-anchor="middle" class="label" font-weight="bold">POST /guess</text>
+  <text x="250" y="668" text-anchor="middle" font-size="9" fill="#666">{letter: "A"}</text>
+  
+  <path d="M 250 685 L 250 720" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Check if correct -->
+  <polygon points="250,720 320,755 250,790 180,755" class="decision-box"/>
+  <text x="250" y="760" text-anchor="middle" class="label" font-weight="bold">Letter in word?</text>
+  
+  <!-- YES -->
+  <path d="M 320 755 L 380 755" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="340" y="750" font-size="10" fill="#388e3c" font-weight="bold">YES</text>
+  
+  <rect x="380" y="730" width="140" height="50" rx="5" class="process-box"/>
+  <text x="450" y="758" text-anchor="middle" class="label" font-weight="bold">Update Display</text>
+  
+  <!-- NO -->
+  <path d="M 250 790 L 250 830" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="260" y="815" font-size="10" fill="#d32f2f" font-weight="bold">NO</text>
+  
+  <rect x="180" y="830" width="140" height="50" rx="5" class="action-box"/>
+  <text x="250" y="858" text-anchor="middle" class="label" font-weight="bold">wrong_guesses++</text>
+  
+  <!-- RIGHT BRANCH: Update Time -->
+  <path d="M 700 660 L 850 660" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="770" y="655" font-size="10" fill="#333">TIMER</text>
+  
+  <rect x="850" y="635" width="200" height="50" rx="5" class="action-box"/>
+  <text x="950" y="653" text-anchor="middle" class="label" font-weight="bold">POST /update_time</text>
+  <text x="950" y="668" text-anchor="middle" font-size="9" fill="#666">{time_left: 240}</text>
+  
+  <path d="M 950 685 L 950 720" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Check timer -->
+  <polygon points="950,720 1020,755 950,790 880,755" class="decision-box"/>
+  <text x="950" y="760" text-anchor="middle" class="label" font-weight="bold">time_left > 0?</text>
+  
+  <!-- YES -->
+  <path d="M 880 755 L 820 755" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="840" y="750" font-size="10" fill="#388e3c" font-weight="bold">YES</text>
+  
+  <!-- NO - Timeout -->
+  <path d="M 950 790 L 950 830" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="960" y="815" font-size="10" fill="#d32f2f" font-weight="bold">NO</text>
+  
+  <rect x="880" y="830" width="140" height="50" rx="5" class="end-box"/>
+  <text x="950" y="858" text-anchor="middle" class="label" font-weight="bold">TIMEOUT!</text>
+  
+  <!-- Convergence point -->
+  <path d="M 450 755 L 520 755" class="arrow" marker-end="url(#arrowhead)"/>
+  <path d="M 250 880 L 520 880" class="arrow" marker-end="url(#arrowhead)"/>
+  <path d="M 950 880 L 520 880" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <circle cx="520" cy="880" r="20" class="decision-box"/>
+  <text x="520" y="885" text-anchor="middle" class="label" font-weight="bold">Check</text>
+  
+  <!-- Main decision -->
+  <path d="M 520 900 L 520 935" class="arrow" marker-end="url(#arrowhead)"/>
+  
+  <!-- Game Over Decision -->
+  <polygon points="520,935 600,970 520,1005 440,970" class="decision-box"/>
+  <text x="520" y="970" text-anchor="middle" class="label" font-weight="bold">Game Over?</text>
+  
+  <!-- NO - Loop back -->
+  <path d="M 440 970 L 200 970 L 200 560 L 450 560" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="150" y="965" font-size="10" fill="#333" font-weight="bold">NO</text>
+  
+  <!-- YES -->
+  <path d="M 600 1005 L 600 1040" class="arrow" marker-end="url(#arrowhead)"/>
+  <text x="615" y="1025" font-size="10" fill="#d32f2f" font-weight="bold">YES</text>
+  
+  <!-- END section (moved up to fit) -->
+  <circle cx="600" cy="1050" r="25" class="end-box" stroke="#388e3c" stroke-width="2"/>
+  <text x="600" y="1057" text-anchor="middle" class="label" font-weight="bold">END</text>
+  
+  <!-- Legend -->
+  <text x="50" y="950" font-size="12" font-weight="bold" fill="#333">Legend:</text>
+  <rect x="50" y="960" width="25" height="25" rx="3" class="process-box"/>
+  <text x="85" y="977" font-size="10" fill="#333">User Action</text>
+  
+  <rect x="50" y="995" width="25" height="25" rx="3" class="action-box"/>
+  <text x="85" y="1012" font-size="10" fill="#333">Backend Process</text>
+</svg>

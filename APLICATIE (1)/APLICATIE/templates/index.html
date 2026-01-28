@@ -1,0 +1,995 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 HANGMAN 3D - Spânzurătoarea Modernă</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8); }
+        }
+
+        .game-setup {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .difficulty-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .difficulty-btn:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .difficulty-btn.active {
+            background: rgba(76, 175, 80, 0.8);
+            border-color: #4CAF50;
+            transform: scale(1.1);
+        }
+
+        .start-btn {
+            display: block;
+            margin: 0 auto;
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .game-area {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .game-info {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .timer {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .timer.warning {
+            background: rgba(255, 0, 0, 0.3);
+            animation: fastPulse 0.5s ease-in-out infinite;
+        }
+
+        @keyframes fastPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-10px) rotate(-1deg); }
+            20% { transform: translateX(10px) rotate(1deg); }
+            30% { transform: translateX(-10px) rotate(-1deg); }
+            40% { transform: translateX(10px) rotate(1deg); }
+            50% { transform: translateX(-5px) rotate(-0.5deg); }
+            60% { transform: translateX(5px) rotate(0.5deg); }
+            70% { transform: translateX(-5px) rotate(-0.5deg); }
+            80% { transform: translateX(5px) rotate(0.5deg); }
+            90% { transform: translateX(-2px); }
+        }
+
+        .word-display {
+            font-size: 3rem;
+            text-align: center;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .alphabet {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .letter-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid transparent;
+        }
+
+        .letter-btn:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .letter-btn.correct {
+            background: rgba(76, 175, 80, 0.8);
+            border-color: #4CAF50;
+        }
+
+        .letter-btn.incorrect {
+            background: rgba(244, 67, 54, 0.8);
+            border-color: #F44336;
+        }
+
+        .letter-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .hangman-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            position: relative;
+            height: 400px;
+        }
+
+        #hangman-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+        }
+
+        .game-over {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .game-over-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-over h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .game-over p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .fire-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.8) 0%, rgba(255, 165, 0, 0.6) 30%, rgba(255, 255, 0, 0.4) 60%, transparent 100%);
+            display: none;
+            animation: explosion 2s ease-out;
+        }
+
+        @keyframes explosion {
+            0% { 
+                transform: scale(0);
+                opacity: 1;
+                background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 0, 0, 0.9) 20%, transparent 40%);
+            }
+            25% {
+                transform: scale(1.5);
+                opacity: 0.9;
+                background: radial-gradient(circle, rgba(255, 165, 0, 0.9) 0%, rgba(255, 0, 0, 0.7) 40%, transparent 70%);
+            }
+            50% {
+                transform: scale(2);
+                opacity: 0.7;
+                background: radial-gradient(circle, rgba(255, 0, 0, 0.8) 0%, rgba(139, 0, 0, 0.6) 50%, transparent 80%);
+            }
+            100% { 
+                transform: scale(3);
+                opacity: 0;
+                background: radial-gradient(circle, rgba(139, 0, 0, 0.3) 0%, transparent 60%);
+            }
+        }
+
+        .victory-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.6) 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+            display: none;
+            animation: victoryGlow 3s ease-in-out;
+        }
+
+        @keyframes victoryGlow {
+            0% { 
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            25% {
+                opacity: 0.8;
+                transform: scale(1.2);
+                background: radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, rgba(255, 255, 255, 0.6) 40%, rgba(173, 216, 230, 0.4) 70%, transparent 100%);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 215, 0, 0.7) 30%, rgba(173, 216, 230, 0.5) 60%, transparent 90%);
+            }
+            100% { 
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 998;
+            display: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: gold;
+            border-radius: 50%;
+            animation: sparkleFloat 2s linear infinite;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+        }
+
+        .music-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .music-btn {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .game-area {
+                grid-template-columns: 1fr;
+            }
+            
+            .difficulty-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .alphabet {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .word-display {
+                font-size: 2rem;
+                letter-spacing: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="music-controls">
+        <button class="music-btn" onclick="toggleMusic()">🎵</button>
+    </div>
+
+    <div class="fire-overlay" id="fireOverlay"></div>
+    <div class="victory-overlay" id="victoryOverlay"></div>
+    <div class="sparkles" id="sparkles"></div>
+
+    <div class="container">
+        <h1 class="title">🎮 HANGMAN 3D</h1>
+        
+        <div class="game-setup" id="gameSetup">
+            <h2 style="text-align: center; margin-bottom: 20px;">Alege Dificultatea</h2>
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn" data-difficulty="usor">😊 UȘOR<br><small>6:40 min</small></button>
+                <button class="difficulty-btn active" data-difficulty="mediu">😐 MEDIU<br><small>5:00 min</small></button>
+                <button class="difficulty-btn" data-difficulty="greu">😤 GREU<br><small>3:20 min</small></button>
+                <button class="difficulty-btn" data-difficulty="expert">💀 EXPERT<br><small>2:30 min</small></button>
+            </div>
+            <button class="start-btn" onclick="startGame()">🎮 JOC NOU</button>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <div class="game-info">
+                <div class="timer" id="timer">5:00</div>
+                <div class="word-display" id="wordDisplay">_ _ _ _ _</div>
+                <div class="alphabet" id="alphabet"></div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <p>Greșeli: <span id="wrongCount">0</span>/6</p>
+                    <p>Dificultate: <span id="currentDifficulty">MEDIU</span></p>
+                </div>
+            </div>
+            <div class="hangman-container">
+                <canvas id="hangman-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <div class="game-over-content">
+            <h2 id="gameOverTitle">GAME OVER</h2>
+            <p id="gameOverMessage">Mesaj</p>
+            <button class="start-btn" onclick="resetGame()">🔄 JOC NOU</button>
+        </div>
+    </div>
+
+    <script>
+        let currentDifficulty = 'mediu';
+        let gameStarted = false;
+        let timer;
+        let timeLeft = 300;
+        let scene, camera, renderer;
+        let hangmanParts = [];
+        let wrongGuesses = 0;
+        let musicPlaying = false;
+
+        // Inițializare Three.js
+        function initThreeJS() {
+            const canvas = document.getElementById('hangman-canvas');
+            const container = canvas.parentElement;
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+            renderer.setClearColor(0x000000, 0);
+
+            // Lumină
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(5, 5, 5);
+            scene.add(light);
+
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+            scene.add(ambientLight);
+
+            // Spânzurătoarea de bază
+            const poleGeometry = new THREE.CylinderGeometry(0.1, 0.1, 5, 8);
+            const poleMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+            const pole = new THREE.Mesh(poleGeometry, poleMaterial);
+            pole.position.set(0, 0, 0);
+            scene.add(pole);
+
+            const topBeamGeometry = new THREE.CylinderGeometry(0.05, 0.05, 3, 8);
+            const topBeam = new THREE.Mesh(topBeamGeometry, poleMaterial);
+            topBeam.rotation.z = Math.PI / 2;
+            topBeam.position.set(1.5, 2.5, 0);
+            scene.add(topBeam);
+
+            const nooseGeometry = new THREE.CylinderGeometry(0.02, 0.02, 1, 8);
+            const noose = new THREE.Mesh(nooseGeometry, poleMaterial);
+            noose.position.set(3, 1.5, 0);
+            scene.add(noose);
+
+            camera.position.set(5, 2, 5);
+            camera.lookAt(2, 1, 0);
+
+            // Animație de rotație
+            function animate() {
+                requestAnimationFrame(animate);
+                camera.position.x = Math.cos(Date.now() * 0.001) * 6;
+                camera.position.z = Math.sin(Date.now() * 0.001) * 6;
+                camera.lookAt(2, 1, 0);
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // Adaugă părți ale omului spânzurat
+        function addHangmanPart(partNumber) {
+            const material = new THREE.MeshLambertMaterial({ color: 0xFFDAB9 });
+            let part;
+
+            switch(partNumber) {
+                case 1: // Cap
+                    const headGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+                    part = new THREE.Mesh(headGeometry, material);
+                    part.position.set(3, 1, 0);
+                    break;
+                case 2: // Trup
+                    const bodyGeometry = new THREE.CylinderGeometry(0.2, 0.2, 1, 8);
+                    part = new THREE.Mesh(bodyGeometry, material);
+                    part.position.set(3, 0.2, 0);
+                    break;
+                case 3: // Braț stâng
+                    const leftArmGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.8, 8);
+                    part = new THREE.Mesh(leftArmGeometry, material);
+                    part.rotation.z = Math.PI / 4;
+                    part.position.set(2.6, 0.4, 0);
+                    break;
+                case 4: // Braț drept
+                    const rightArmGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.8, 8);
+                    part = new THREE.Mesh(rightArmGeometry, material);
+                    part.rotation.z = -Math.PI / 4;
+                    part.position.set(3.4, 0.4, 0);
+                    break;
+                case 5: // Picior stâng
+                    const leftLegGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.8, 8);
+                    part = new THREE.Mesh(leftLegGeometry, material);
+                    part.rotation.z = Math.PI / 6;
+                    part.position.set(2.8, -0.6, 0);
+                    break;
+                case 6: // Picior drept
+                    const rightLegGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.8, 8);
+                    part = new THREE.Mesh(rightLegGeometry, material);
+                    part.rotation.z = -Math.PI / 6;
+                    part.position.set(3.2, -0.6, 0);
+                    break;
+            }
+
+            if (part) {
+                scene.add(part);
+                hangmanParts.push(part);
+                
+                // Animație de apariție
+                part.scale.set(0, 0, 0);
+                const startTime = Date.now();
+                function scaleUp() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / 500, 1);
+                    const scale = progress * 1;
+                    part.scale.set(scale, scale, scale);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(scaleUp);
+                    }
+                }
+                scaleUp();
+            }
+        }
+
+        // Toggle muzică
+        function toggleMusic() {
+            const btn = document.querySelector('.music-btn');
+            if (musicPlaying) {
+                musicPlaying = false;
+                btn.textContent = '🔇';
+            } else {
+                playAdventureMusic();
+                musicPlaying = true;
+                btn.textContent = '🎵';
+            }
+        }
+
+        // Create adventure music using Web Audio API
+        function playAdventureMusic() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                function createTone(frequency, duration, time, volume = 0.05) {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(frequency, time);
+                    oscillator.type = 'sine';
+                    gainNode.gain.setValueAtTime(0, time);
+                    gainNode.gain.linearRampToValueAtTime(volume, time + 0.01);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, time + duration);
+                    
+                    oscillator.start(time);
+                    oscillator.stop(time + duration);
+                }
+                
+                // Adventure melody - mysterious and epic
+                const melody = [
+                    {freq: 220, dur: 0.5}, // A3
+                    {freq: 246.94, dur: 0.5}, // B3
+                    {freq: 277.18, dur: 0.5}, // C#4
+                    {freq: 329.63, dur: 0.5}, // E4
+                    {freq: 277.18, dur: 0.5}, // C#4
+                    {freq: 246.94, dur: 0.5}, // B3
+                    {freq: 220, dur: 1}, // A3
+                    {freq: 293.66, dur: 0.5}, // D4
+                    {freq: 329.63, dur: 0.5}, // E4
+                    {freq: 369.99, dur: 0.5}, // F#4
+                    {freq: 415.30, dur: 1}, // G#4
+                ];
+                
+                let time = audioContext.currentTime;
+                melody.forEach(note => {
+                    createTone(note.freq, note.dur, time, 0.03);
+                    time += note.dur;
+                });
+                
+                // Loop the melody
+                setTimeout(() => {
+                    if (musicPlaying) playAdventureMusic();
+                }, time * 1000 - audioContext.currentTime * 1000 + 500);
+            } catch(e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        // Victory music
+        function playVictoryMusic() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                function createTone(frequency, duration, time, volume = 0.1) {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(frequency, time);
+                    oscillator.type = 'sine';
+                    gainNode.gain.setValueAtTime(0, time);
+                    gainNode.gain.linearRampToValueAtTime(volume, time + 0.01);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, time + duration);
+                    
+                    oscillator.start(time);
+                    oscillator.stop(time + duration);
+                }
+                
+                // Victory fanfare
+                const victoryMelody = [
+                    {freq: 523.25, dur: 0.3}, // C5
+                    {freq: 659.25, dur: 0.3}, // E5
+                    {freq: 783.99, dur: 0.3}, // G5
+                    {freq: 1046.50, dur: 0.6}, // C6
+                    {freq: 783.99, dur: 0.3}, // G5
+                    {freq: 1046.50, dur: 0.9}, // C6
+                ];
+                
+                let time = audioContext.currentTime;
+                victoryMelody.forEach(note => {
+                    createTone(note.freq, note.dur, time, 0.08);
+                    time += note.dur;
+                });
+            } catch(e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        // Keyboard click sound
+        function playKeySound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+                oscillator.type = 'square';
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 0.01);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch(e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        // Game over explosion sound
+        function playExplosionSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Create noise for explosion effect
+                const bufferSize = audioContext.sampleRate * 0.5;
+                const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                const output = buffer.getChannelData(0);
+                
+                for (let i = 0; i < bufferSize; i++) {
+                    output[i] = Math.random() * 2 - 1;
+                }
+                
+                const whiteNoise = audioContext.createBufferSource();
+                const gainNode = audioContext.createGain();
+                const filter = audioContext.createBiquadFilter();
+                
+                whiteNoise.buffer = buffer;
+                whiteNoise.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(100, audioContext.currentTime);
+                filter.frequency.exponentialRampToValueAtTime(2000, audioContext.currentTime + 0.1);
+                filter.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.5);
+                
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                whiteNoise.start(audioContext.currentTime);
+                whiteNoise.stop(audioContext.currentTime + 0.5);
+            } catch(e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        // Create sparkles effect
+        function createSparkles() {
+            const sparklesContainer = document.getElementById('sparkles');
+            sparklesContainer.style.display = 'block';
+            sparklesContainer.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                sparklesContainer.appendChild(sparkle);
+            }
+            
+            setTimeout(() => {
+                sparklesContainer.style.display = 'none';
+            }, 4000);
+        }
+
+        // Selectare dificultate
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+
+        // Creare alfabet
+        function createAlphabet() {
+            const alphabet = document.getElementById('alphabet');
+            alphabet.innerHTML = '';
+            for (let i = 65; i <= 90; i++) {
+                const letter = String.fromCharCode(i);
+                const btn = document.createElement('button');
+                btn.className = 'letter-btn';
+                btn.textContent = letter;
+                btn.onclick = () => guessLetter(letter);
+                alphabet.appendChild(btn);
+            }
+        }
+
+        // Pornire joc
+        async function startGame() {
+            try {
+                const response = await fetch('/start_game', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ difficulty: currentDifficulty })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('gameSetup').style.display = 'none';
+                    document.getElementById('gameArea').style.display = 'grid';
+                    
+                    timeLeft = data.time_left;
+                    document.getElementById('currentDifficulty').textContent = data.difficulty.toUpperCase();
+                    document.getElementById('wordDisplay').textContent = '_ '.repeat(data.word_length).trim();
+                    document.getElementById('wrongCount').textContent = '0';
+                    
+                    createAlphabet();
+                    startTimer();
+                    gameStarted = true;
+                    wrongGuesses = 0;
+                    
+                    // Auto-start adventure music
+                    if (!musicPlaying) {
+                        toggleMusic();
+                    }
+                    
+                    // Reset 3D scene
+                    hangmanParts.forEach(part => scene.remove(part));
+                    hangmanParts = [];
+                    
+                    if (!scene) {
+                        initThreeJS();
+                    }
+                }
+            } catch(error) {
+                console.error('Error starting game:', error);
+            }
+        }
+
+        // Timer
+        function startTimer() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                const timerEl = document.getElementById('timer');
+                timerEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 30) {
+                    timerEl.classList.add('warning');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    endGame(false, 'Timpul a expirat!');
+                }
+                
+                // Update server
+                fetch('/update_time', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ time_left: timeLeft })
+                }).catch(err => console.log('Timer sync error:', err));
+            }, 1000);
+        }
+
+        // Ghicire literă
+        async function guessLetter(letter) {
+            if (!gameStarted) return;
+            
+            // Play keyboard sound
+            playKeySound();
+            
+            try {
+                const response = await fetch('/guess', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ letter: letter })
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    return;
+                }
+
+                // Find the button with matching letter
+                const allBtns = document.querySelectorAll('.letter-btn');
+                let targetBtn = null;
+                
+                allBtns.forEach(button => {
+                    if (button.textContent === letter && !button.disabled) {
+                        targetBtn = button;
+                    }
+                });
+                
+                if (targetBtn) {
+                    targetBtn.disabled = true;
+                    
+                    if (data.correct) {
+                        targetBtn.classList.add('correct');
+                        document.getElementById('wordDisplay').textContent = data.displayed_word.split('').join(' ');
+                    } else {
+                        targetBtn.classList.add('incorrect');
+                        wrongGuesses = data.wrong_guesses;
+                        document.getElementById('wrongCount').textContent = wrongGuesses;
+                        addHangmanPart(wrongGuesses);
+                    }
+                }
+
+                if (data.game_over) {
+                    clearInterval(timer);
+                    if (data.won) {
+                        endGame(true, 'Felicitări! Ai câștigat!');
+                    } else {
+                        endGame(false, `Ai pierdut! Cuvântul era: ${data.word}`);
+                    }
+                }
+            } catch(error) {
+                console.error('Error guessing letter:', error);
+            }
+        }
+
+        // Sfârșitul jocului
+        function endGame(won, message) {
+            gameStarted = false;
+            
+            if (!won) {
+                // Explosion effects
+                playExplosionSound();
+                document.getElementById('fireOverlay').style.display = 'block';
+                
+                // Shake screen effect
+                document.body.style.animation = 'shake 0.5s ease-in-out 3';
+                
+                setTimeout(() => {
+                    document.getElementById('fireOverlay').style.display = 'none';
+                    document.body.style.animation = '';
+                }, 3000);
+            } else {
+                // Victory effects
+                playVictoryMusic();
+                document.getElementById('victoryOverlay').style.display = 'block';
+                createSparkles();
+                
+                setTimeout(() => {
+                    document.getElementById('victoryOverlay').style.display = 'none';
+                }, 4000);
+            }
+            
+            const title = won ? '🎉 VICTORIE GLORIOASĂ!' : '💀 EXPLOZIE! Ai murit!';
+            document.getElementById('gameOverTitle').textContent = title;
+            document.getElementById('gameOverMessage').textContent = message;
+            document.getElementById('gameOver').style.display = 'flex';
+        }
+
+        // Reset joc
+        function resetGame() {
+            document.getElementById('gameOver').style.display = 'none';
+            document.getElementById('gameArea').style.display = 'none';
+            document.getElementById('gameSetup').style.display = 'block';
+            document.getElementById('timer').classList.remove('warning');
+            
+            if (timer) {
+                clearInterval(timer);
+            }
+            
+            gameStarted = false;
+        }
+
+        // Controlul tastaturii
+        document.addEventListener('keydown', (e) => {
+            if (gameStarted && e.key.match(/[a-zA-Z]/) && e.key.length === 1) {
+                guessLetter(e.key.toUpperCase());
+            }
+        });
+
+        // Inițializare la încărcarea paginii
+        window.addEventListener('load', () => {
+            createAlphabet();
+        });
+
+        // Responsive
+        window.addEventListener('resize', () => {
+            if (renderer) {
+                const container = document.getElementById('hangman-canvas').parentElement;
+                camera.aspect = container.offsetWidth / container.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.offsetWidth, container.offsetHeight);
+            }
+        });
+    </script>
+</body>
+</html>

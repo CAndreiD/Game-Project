@@ -1,0 +1,7 @@
+2025-12-22 14:09:52 - root - INFO - Logging initialized - Level: INFO
+2025-12-22 14:09:52 - root - INFO - Log file: logs/app_20251222_140952.log
+2025-12-22 14:09:52 - __main__ - INFO - Starting Hangman 3D application
+2025-12-22 14:09:52 - __main__ - INFO - Starting Flask development server
+2025-12-22 14:09:52 - werkzeug - WARNING -  * Debugger is active!
+2025-12-22 14:09:52 - werkzeug - INFO -  * Debugger PIN: 554-146-951
+2025-12-22 14:09:52 - werkzeug - INFO - 172.31.83.194 - - [22/Dec/2025 14:09:52] "GET / HTTP/1.1" 200 -
